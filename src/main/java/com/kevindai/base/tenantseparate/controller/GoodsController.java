@@ -1,5 +1,8 @@
 package com.kevindai.base.tenantseparate.controller;
 
+import java.util.List;
+
+import com.kevindai.base.tenantseparate.dto.GoodEntityDto;
 import com.kevindai.base.tenantseparate.dto.GoodsCreationDto;
 import com.kevindai.base.tenantseparate.service.GoodsService;
 import lombok.RequiredArgsConstructor;
@@ -19,5 +22,11 @@ public class GoodsController {
     @GetMapping
     public Object list() {
         return goodsService.findAll();
+    }
+
+
+    @GetMapping("/name/{name}")
+    public GoodEntityDto getByName(@PathVariable String name) {
+        return goodsService.getByName(name);
     }
 }

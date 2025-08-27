@@ -1,8 +1,10 @@
-CREATE SCHEMA jane;
-CREATE SCHEMA mike;
+create database tenant-separate;
+
+CREATE SCHEMA r100_jane;
+CREATE SCHEMA r100_mike;
 
 
-create table jane.goods (
+create table r100_jane.goods (
                        id            bigint generated always as identity primary key,
                        goods_name varchar(256),
                        created_at    timestamptz not null default now(),
@@ -10,7 +12,7 @@ create table jane.goods (
 );
 
 
-create table mike.goods (
+create table r100_mike.goods (
                             id            bigint generated always as identity primary key,
                             goods_name varchar(256),
                             created_at    timestamptz not null default now(),

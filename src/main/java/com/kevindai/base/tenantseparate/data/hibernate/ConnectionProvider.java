@@ -1,29 +1,33 @@
 package com.kevindai.base.tenantseparate.data.hibernate;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.Map;
+
+import javax.sql.DataSource;
+
+import com.kevindai.base.tenantseparate.multitenancy.MultiTenancyProperties;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomizer;
 import org.springframework.stereotype.Component;
 
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.Map;
-
 @RequiredArgsConstructor
 @Component
 public class ConnectionProvider implements MultiTenantConnectionProvider<String>, HibernatePropertiesCustomizer {
+
     private final DataSource dataSource;
+    private final MultiTenancyProperties multiTenancyProperties;
 
     @Override
     public Connection getAnyConnection() throws SQLException {
-        return getConnection("public");
+        return getConnection(multiTenancyProperties.getDefaultSchema());
     }
 
     @Override
     public void releaseAnyConnection(Connection connection) throws SQLException {
-        connection.setSchema("public");
+        connection.setSchema(multiTenancyProperties.getDefaultSchema());
         connection.close();
     }
 
@@ -36,7 +40,7 @@ public class ConnectionProvider implements MultiTenantConnectionProvider<String>
 
     @Override
     public void releaseConnection(String tenantIdentifier, Connection connection) throws SQLException {
-        connection.setSchema("public");
+        connection.setSchema(multiTenancyProperties.getDefaultSchema());
         connection.close();
     }
 

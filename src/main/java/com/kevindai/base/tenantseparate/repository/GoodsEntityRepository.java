@@ -4,4 +4,6 @@ import com.kevindai.base.tenantseparate.entity.GoodsEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface GoodsEntityRepository extends JpaRepository<GoodsEntity, Long> {
+
+    GoodsEntity findByGoodsName(String name);
 }
