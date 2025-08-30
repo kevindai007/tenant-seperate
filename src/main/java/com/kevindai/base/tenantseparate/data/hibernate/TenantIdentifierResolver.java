@@ -7,7 +7,6 @@ import com.kevindai.base.tenantseparate.multitenancy.MultiTenancyProperties;
 import com.kevindai.base.tenantseparate.multitenancy.context.TenantContext;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.cfg.AvailableSettings;
-import org.hibernate.cfg.MultiTenancySettings;
 import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomizer;
 import org.springframework.stereotype.Component;
@@ -32,6 +31,6 @@ public class TenantIdentifierResolver implements CurrentTenantIdentifierResolver
     @Override
     public void customize(Map<String, Object> hibernateProperties) {
         hibernateProperties.put(AvailableSettings.MULTI_TENANT_IDENTIFIER_RESOLVER, this);
-        hibernateProperties.put(MultiTenancySettings.MULTI_TENANT, multiTenancyProperties.getStrategy().name());
+        hibernateProperties.put("hibernate.multiTenancy", multiTenancyProperties.getStrategy().name());
     }
 }
