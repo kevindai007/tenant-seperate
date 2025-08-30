@@ -22,6 +22,7 @@ public class GoodsEntity {
     @Column(name = "goods_name", length = 256)
     private String goodsName;
 
+    // Marked with @TenantId so Hibernate automatically restricts queries by tenant
     @TenantId
     @Column(name = "tenant_id", nullable = false)
     private String tenantId;
