@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kevindai.base.tenantseparate.dto.GoodEntityDto;
 import com.kevindai.base.tenantseparate.dto.GoodsCreationDto;
+import com.kevindai.base.tenantseparate.dto.PriceEntityDto;
 import com.kevindai.base.tenantseparate.service.GoodsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -28,5 +29,10 @@ public class GoodsController {
     @GetMapping("/name/{name}")
     public GoodEntityDto getByName(@PathVariable String name) {
         return goodsService.getByName(name);
+    }
+
+    @GetMapping("/price/{name}")
+    public PriceEntityDto getPriceByName(@PathVariable String name) {
+        return goodsService.getPriceByName(name);
     }
 }

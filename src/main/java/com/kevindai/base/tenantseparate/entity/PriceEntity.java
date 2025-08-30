@@ -1,19 +1,26 @@
 package com.kevindai.base.tenantseparate.entity;
 
+import java.time.Instant;
+
 import com.kevindai.base.tenantseparate.multitenancy.context.TenantContext;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.TenantId;
 
-import java.time.Instant;
-
 @Getter
 @Setter
 @Entity
-@Table(name = "goods")
-public class GoodsEntity {
+@Table(name = "price")
+public class PriceEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -21,6 +28,9 @@ public class GoodsEntity {
 
     @Column(name = "goods_name", length = 256)
     private String goodsName;
+
+    @Column(name = "price", nullable = false)
+    private Double price;
 
     // Marked with @TenantId so Hibernate automatically restricts queries by tenant
     @TenantId

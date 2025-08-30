@@ -12,4 +12,5 @@ import org.springframework.stereotype.Component;
 public class MultiTenancyProperties {
 
     private String defaultSchema;
+    private MultiTenancyStrategy strategy = MultiTenancyStrategy.SCHEMA;
 }
