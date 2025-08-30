@@ -2,7 +2,6 @@ package com.kevindai.base.tenantseparate.multitenancy;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.MultiTenancyStrategy;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 

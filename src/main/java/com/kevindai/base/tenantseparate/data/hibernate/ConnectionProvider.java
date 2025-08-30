@@ -8,7 +8,7 @@ import javax.sql.DataSource;
 
 import com.kevindai.base.tenantseparate.multitenancy.MultiTenancyProperties;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.MultiTenancyStrategy;
+import com.kevindai.base.tenantseparate.multitenancy.MultiTenancyStrategy;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomizer;
