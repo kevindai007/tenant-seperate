@@ -1,5 +1,8 @@
 package com.kevindai.base.tenantseparate.multitenancy;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -13,4 +16,15 @@ public class MultiTenancyProperties {
 
     private String defaultSchema;
     private MultiTenancyStrategy strategy = MultiTenancyStrategy.SCHEMA;
+    private Map<String, DataSourceConfig> databases = new HashMap<>();
+
+
+    @Getter
+    @Setter
+    public static class DataSourceConfig {
+        private String url;
+        private String username;
+        private String password;
+        private String driverClassName;
+    }
 }

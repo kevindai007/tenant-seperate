@@ -30,5 +30,16 @@ multitenancy:
   http:
     header-name: X-TenantID
   default-schema: public
-  strategy: SCHEMA
+  strategy: DATABASE
+  databases:
+    r100_jane:
+      url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/r100_jane
+      username: ${DB_USER}
+      password: ${DB_PASSWORD}
+      driver-class-name: org.postgresql.Driver
+    r100_mike:
+      url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/r100_mike
+      username: ${DB_USER}
+      password: ${DB_PASSWORD}
+      driver-class-name: org.postgresql.Driver
 
