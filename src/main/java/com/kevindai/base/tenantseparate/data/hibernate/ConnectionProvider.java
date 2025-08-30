@@ -8,6 +8,7 @@ import javax.sql.DataSource;
 
 import com.kevindai.base.tenantseparate.multitenancy.MultiTenancyProperties;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.MultiTenancyStrategy;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomizer;
@@ -60,6 +61,8 @@ public class ConnectionProvider implements MultiTenantConnectionProvider<String>
 
     @Override
     public void customize(Map<String, Object> hibernateProperties) {
-        hibernateProperties.put(AvailableSettings.MULTI_TENANT_CONNECTION_PROVIDER, this);
+        if (multiTenancyProperties.getStrategy() == MultiTenancyStrategy.SCHEMA) {
+            hibernateProperties.put(AvailableSettings.MULTI_TENANT_CONNECTION_PROVIDER, this);
+        }
     }
 }

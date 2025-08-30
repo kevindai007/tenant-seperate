@@ -2,6 +2,7 @@ package com.kevindai.base.tenantseparate.multitenancy;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.MultiTenancyStrategy;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -12,4 +13,5 @@ import org.springframework.stereotype.Component;
 public class MultiTenancyProperties {
 
     private String defaultSchema;
+    private MultiTenancyStrategy strategy = MultiTenancyStrategy.SCHEMA;
 }

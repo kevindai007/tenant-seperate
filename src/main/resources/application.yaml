@@ -10,8 +10,9 @@ spring:
     jdbc:
       dialect: postgresql
 
-
 multitenancy:
   http:
     header-name: X-TenantID
   default-schema: public
+  strategy: SCHEMA
+
