@@ -9,7 +9,10 @@ import javax.sql.DataSource;
 
 import com.kevindai.base.tenantseparate.multitenancy.MultiTenancyProperties;
 import com.kevindai.base.tenantseparate.multitenancy.MultiTenancyStrategy;
+import com.zaxxer.hikari.HikariDataSource;
+import com.zaxxer.hikari.HikariPoolMXBean;
 import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.cfg.MultiTenancySettings;
 import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
@@ -30,13 +33,50 @@ public class ConnectionProvider implements MultiTenantConnectionProvider<String>
         if (multiTenancyProperties.getStrategy() == MultiTenancyStrategy.DATABASE) {
             for (Map.Entry<String, MultiTenancyProperties.DataSourceConfig> entry : multiTenancyProperties.getDatabases().entrySet()) {
                 MultiTenancyProperties.DataSourceConfig config = entry.getValue();
-                DataSource ds = DataSourceBuilder.create()
+                HikariDataSource ds = DataSourceBuilder.create()
+                        .type(HikariDataSource.class)
                         .url(config.getUrl())
                         .username(config.getUsername())
                         .password(config.getPassword())
                         .driverClassName(config.getDriverClassName())
                         .build();
+                if (config.getMinimumIdle() != null) {
+                    ds.setMinimumIdle(config.getMinimumIdle());
+                }
+                if (config.getMaximumPoolSize() != null) {
+                    ds.setMaximumPoolSize(config.getMaximumPoolSize());
+                }
+                if (config.getIdleTimeout() != null) {
+                    ds.setIdleTimeout(config.getIdleTimeout());
+                }
+                if (config.getMaxLifetime() != null) {
+                    ds.setMaxLifetime(config.getMaxLifetime());
+                }
+                if (config.getConnectionTimeout() != null) {
+                    ds.setConnectionTimeout(config.getConnectionTimeout());
+                }
                 dataSources.put(entry.getKey(), ds);
+            }
+        }
+    }
+
+    @PreDestroy
+    public void destroy() {
+        dataSources.values().forEach(this::closeDataSource);
+    }
+
+    public void removeDataSource(String tenantIdentifier) {
+        DataSource ds = dataSources.remove(tenantIdentifier);
+        if (ds != null) {
+            closeDataSource(ds);
+        }
+    }
+
+    private void closeDataSource(DataSource ds) {
+        if (ds instanceof AutoCloseable closeable) {
+            try {
+                closeable.close();
+            } catch (Exception ignored) {
             }
         }
     }

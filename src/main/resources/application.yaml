@@ -37,9 +37,13 @@ multitenancy:
       username: ${DB_USER}
       password: ${DB_PASSWORD}
       driver-class-name: org.postgresql.Driver
+      minimum-idle: 5
+      maximum-pool-size: 10
     r100_mike:
       url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/r100_mike
       username: ${DB_USER}
       password: ${DB_PASSWORD}
       driver-class-name: org.postgresql.Driver
+      minimum-idle: 5
+      maximum-pool-size: 10
 

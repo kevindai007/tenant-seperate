@@ -26,5 +26,10 @@ public class MultiTenancyProperties {
         private String username;
         private String password;
         private String driverClassName;
+        private Integer minimumIdle;
+        private Integer maximumPoolSize;
+        private Long idleTimeout;
+        private Long maxLifetime;
+        private Long connectionTimeout;
     }
 }
