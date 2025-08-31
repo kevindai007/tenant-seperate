@@ -31,6 +31,11 @@ public class GoodsController {
         return goodsService.getByName(name);
     }
 
+    @PostMapping("/price")
+    public void setPrice(@RequestBody PriceEntityDto priceEntityDto) {
+        goodsService.createPrice(priceEntityDto);
+    }
+
     @GetMapping("/price/{name}")
     public PriceEntityDto getPriceByName(@PathVariable String name) {
         return goodsService.getPriceByName(name);

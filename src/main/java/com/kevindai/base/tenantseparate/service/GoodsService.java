@@ -69,4 +69,13 @@ public class GoodsService {
         return dto;
 
     }
+
+    public void createPrice(PriceEntityDto priceEntityDto) {
+        var entity = new com.kevindai.base.tenantseparate.entity.PriceEntity();
+        entity.setGoodsName(priceEntityDto.getGoodsName());
+        entity.setPrice(priceEntityDto.getPrice());
+        entity.setCreatedAt(Instant.now());
+        entity.setUpdatedAt(Instant.now());
+        priceEntityRepository.save(entity);
+    }
 }
