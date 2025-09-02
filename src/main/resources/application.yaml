@@ -17,6 +17,9 @@ spring:
         use_sql_comments: true
         generate_statistics: true
     show-sql: true
+  threads:
+    virtual:
+      enabled: true
 
 logging:
   level:
