@@ -3,6 +3,7 @@ package com.kevindai.base.tenantseparate.service;
 import java.time.Instant;
 import java.util.List;
 
+import com.kevindai.base.tenantseparate.datapermission.DataScopeService;
 import com.kevindai.base.tenantseparate.dto.GoodEntityDto;
 import com.kevindai.base.tenantseparate.dto.GoodsCreationDto;
 import com.kevindai.base.tenantseparate.dto.PriceEntityDto;
@@ -19,12 +20,25 @@ public class GoodsService {
 
     private final GoodsEntityRepository goodsEntityRepository;
     private final PriceEntityRepository priceEntityRepository;
+    private final DataScopeService dataScopeService;
 
     public void create(GoodsCreationDto goodsCreationDto) {
         var entity = new GoodsEntity();
         entity.setGoodsName(goodsCreationDto.getName());
         entity.setCreatedAt(Instant.now());
         entity.setUpdatedAt(Instant.now());
+        
+        // 设置数据权限相关字段
+        var currentScope = dataScopeService.currentScope();
+        if (currentScope != null && !currentScope.getUserIds().isEmpty()) {
+            // 设置创建者为当前用户ID列表中的第一个用户
+            entity.setOwnerId(currentScope.getUserIds().get(0));
+        }
+        if (currentScope != null && !currentScope.getEntityIds().isEmpty()) {
+            // 设置所属实体为当前实体ID列表中的第一个实体
+            entity.setOwingEntityId(currentScope.getEntityIds().get(0));
+        }
+        
         goodsEntityRepository.save(entity);
     }
 
@@ -51,7 +65,6 @@ public class GoodsService {
         dto.setCreatedAt(entity.getCreatedAt());
         dto.setUpdatedAt(entity.getUpdatedAt());
         return dto;
-
     }
 
     public PriceEntityDto getPriceByName(String name) {

@@ -1,18 +1,17 @@
 package com.kevindai.base.tenantseparate.data.hibernate;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.Map;
-
-import javax.sql.DataSource;
-
 import com.kevindai.base.tenantseparate.multitenancy.MultiTenancyProperties;
-import lombok.RequiredArgsConstructor;
 import com.kevindai.base.tenantseparate.multitenancy.MultiTenancyStrategy;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.cfg.MultiTenancySettings;
 import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomizer;
 import org.springframework.stereotype.Component;
+
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Component
