@@ -1,13 +1,22 @@
 package com.kevindai.base.tenantseparate.entity;
 
+import java.time.Instant;
+
 import com.kevindai.base.tenantseparate.multitenancy.context.TenantContext;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.*;
-
-import java.time.Instant;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.ParamDef;
+import org.hibernate.annotations.TenantId;
 
 @FilterDef(name = "dataScope", parameters = {
         @ParamDef(name = "isAll", type = java.lang.Boolean.class),
@@ -23,6 +32,7 @@ import java.time.Instant;
 @Entity
 @Table(name = "goods")
 public class GoodsEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
