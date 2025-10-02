@@ -13,4 +13,5 @@ public class MultiTenancyProperties {
 
     private String defaultSchema;
     private MultiTenancyStrategy strategy = MultiTenancyStrategy.SCHEMA;
+    def abcd
 }
